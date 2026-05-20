@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBZ to Canvas Migration Console</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <span>MBZ</span>
+      <div>
+        <strong>Migration Console</strong>
+        <small>Moodle to Canvas intelligence</small>
+      </div>
+    </div>
+    <nav id="actionNav" aria-label="Migration actions"></nav>
+  </aside>
+
+  <main class="app">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Local backup analysis</p>
+        <h1>Inspect Moodle backups before they become Canvas cleanup.</h1>
+      </div>
+      <div class="hero-actions">
+        <button id="exportJson" disabled>Export JSON</button>
+        <button id="exportMarkdown" class="primary" disabled>Export Review Packet</button>
+      </div>
+    </header>
+
+    <section class="dropzone" id="dropZone">
+      <div>
+        <h2>Load a Moodle backup</h2>
+        <p>Choose an `.mbz` file, select an extracted backup folder, or use the built-in sample. All parsing runs in this browser.</p>
+      </div>
+      <div class="load-actions">
+        <label class="file-control primary">
+          Choose MBZ
+          <input id="mbzInput" type="file" accept=".mbz,.tgz,.tar,.gz,application/gzip,application/x-gzip">
+        </label>
+        <label class="file-control">
+          Choose Folder
+          <input id="folderInput" type="file" webkitdirectory multiple>
+        </label>
+        <button id="sampleButton">Try Sample</button>
+      </div>
+    </section>
+
+    <section class="status" id="status" hidden>
+      <div><span>Source</span><strong id="sourceName">Waiting</strong></div>
+      <div><span>Files read</span><strong id="filesRead">0</strong></div>
+      <div><span>Readiness</span><strong id="readiness">0/100</strong></div>
+    </section>
+
+    <section class="metrics" id="metrics" hidden></section>
+
+    <section class="layout" id="layout" hidden>
+      <div class="reports">
+        <section class="panel">
+          <p class="eyebrow">Course snapshot</p>
+          <h2 id="courseTitle">No course loaded</h2>
+          <div class="meta" id="courseMeta"></div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">Module mapping blueprint</p>
+          <h2>Moodle sections to Canvas modules</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Canvas module</th><th>Moodle section</th><th>Items</th><th>Risk</th></tr>
+              </thead>
+              <tbody id="moduleRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">Activity inventory</p>
+          <h2>What Canvas needs to represent</h2>
+          <div id="activityRows" class="rows"></div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">Migration flags</p>
+          <h2>Links, accessibility, cleanup, and files</h2>
+          <div id="issueRows" class="rows"></div>
+        </section>
+      </div>
+
+      <aside class="details">
+        <p class="eyebrow">Selected action</p>
+        <h2 id="actionTitle">Preflight Course Audit</h2>
+        <p id="actionDescription">Load a backup to generate migration intelligence.</p>
+        <div id="actionOutput" class="output"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
